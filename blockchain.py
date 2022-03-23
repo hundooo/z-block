@@ -13,3 +13,11 @@ class BlockChain(object):
     @property
     def last_block(self):
         return self.chain[-1]
+
+    def new_transactions(self, sender, recipient, amount):
+        self.current_transactions.append({
+            'sender': sender,
+            'recipient': recipient,
+            'amount': amount,
+        })
+        return self.last_block['index'] + 1
