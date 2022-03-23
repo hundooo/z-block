@@ -63,7 +63,7 @@ def mine():
     return "We will mine a new block"
 
 @app.route('/transaction/new', methods=['GET'])
-def transaction_new():
+def new_transaction():
     return "We will add a new transaction"
 
 @app.route('/chain', methods=['GET'])
