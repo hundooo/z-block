@@ -4,6 +4,9 @@ import json
 from time import time
 from uuid import uuid4
 
+from flask import Flask, jsonify, request
+
+
 class BlockChain(object):
     def __init__(self):
         self.chain = []
@@ -50,3 +53,8 @@ class BlockChain(object):
         guess = f'{last_proof}{proof}'.encode()
         guess_hash = hashlib.sha256(guess).hexdigest()
         return guess_hash[:4] == "0000"
+
+app = Flask(__name__)
+node_indentifier = str(uuid4()).replace('-','')
+blockchain = BlockChain()
+
