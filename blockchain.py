@@ -58,3 +58,21 @@ app = Flask(__name__)
 node_indentifier = str(uuid4()).replace('-','')
 blockchain = BlockChain()
 
+@app.route('/mine', methods=['GET'])
+def mine():
+    return "We will mine a new block"
+
+@app.route('/transaction/new', methods=['GET'])
+def transaction_new():
+    return "We will add a new transaction"
+
+@app.route('/chain', methods=['GET'])
+def chain():
+    response = {
+        'chain': blockchain.chain,
+        'length': len(blockchain.chain),
+    }
+    return jsonify(response), 200
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', 5000)
