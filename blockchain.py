@@ -3,7 +3,6 @@ import json
 
 from time import time
 from uuid import uuid4
-
 from flask import Flask, jsonify, request
 
 
@@ -21,7 +20,7 @@ class BlockChain(object):
     def new_block(self, proof, previous_hash=None):
         block = {
             'index': len(self.chain) + 1,
-            'timestamp': time.time(),
+            'timestamp': time(),
             'transactions': self.current_transactions,
             'proof': proof,
             'previous_hash': previous_hash or self.hash(self.chain[-1]),
@@ -44,7 +43,7 @@ class BlockChain(object):
     
     def proof_of_work(self, last_proof):
         proof = 0
-        while self.valid_proof(last_proof, proof) is False:
+        while self.validate_proof(last_proof, proof) is False:
             proof += 1
         return proof
     
@@ -76,11 +75,11 @@ def mine():
     response = {
         'message': "Forged new block.",
         'index': block['index'],
-        'transactions': block['transaction'],
+        'transactions': block['transactions'],
         'proof': block['proof'],
         'previous_hash': block['previous_hash'],
     }
-    return jsonify(response), 200
+    return jsonify(response, 200)
 
 @app.route('/transaction/new', methods=['GET'])
 def new_transaction():
