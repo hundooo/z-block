@@ -75,7 +75,7 @@ def mine():
 
     response = {
         'message': "Forged new block.",
-        'index': block[index],
+        'index': block['index'],
         'transactions': block['transaction'],
         'proof': block['proof'],
         'previous_hash': block['previous_hash'],
@@ -104,4 +104,4 @@ def chain():
     return jsonify(response), 200
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', 5000)
+    app.run(host='0.0.0.0', port=5000)
