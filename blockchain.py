@@ -54,7 +54,7 @@ class BlockChain(object):
         return guess_hash[:4] == "0000"
 
 app = Flask(__name__)
-node_indentifier = str(uuid4()).replace('-','')
+node_identifier = str(uuid4()).replace('-','')
 blockchain = BlockChain()
 
 @app.route('/mine', methods=['GET'])
@@ -65,7 +65,7 @@ def mine():
 
     blockchain.new_transaction(
         sender = 0,
-        recipient = node_indentifier,
+        recipient = node_identifier,
         amount = 1,
     )
 
@@ -81,13 +81,13 @@ def mine():
     }
     return jsonify(response, 200)
 
-@app.route('/transaction/new', methods=['GET'])
+@app.route('/transactions/new', methods=['GET'])
 def new_transaction():
     values = request.get_json()
     required = ['sender', 'recipient', 'amount']
 
     if not all(k in values for k in required):
-        return 'Missing values', 400
+        return 'Missing values.', 400
     
     index = blockchain.new_transaction(values['sender'], values['recipient'], values['amount'])
     response = {'message': f'Transaction will be added to the Block {index}.'}
