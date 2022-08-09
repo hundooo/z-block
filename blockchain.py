@@ -104,6 +104,23 @@ app = Flask(__name__)
 node_identifier = str(uuid4()).replace('-','')
 blockchain = BlockChain()
 
+@app.route('/miner/register', method=['POST'])
+def register_new_miner():
+    values = request.get_json()
+
+    nodes = values.get('nodes')
+    if nodes is None:
+        return "Error: Please supply list of valid nodes", 400
+
+    for node in nodes:
+        blockchain.register_node(node)
+
+    response = {
+        'message': 'New nodes have been added.',
+        'total_nodes': list(blockchain.nodes),
+    }
+    return jsonify(response), 200
+
 @app.route('/mine', methods=['GET'])
 def mine():
     last_block = blockchain.last_block
