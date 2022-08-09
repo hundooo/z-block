@@ -121,6 +121,23 @@ def register_new_miner():
     }
     return jsonify(response), 200
 
+@app.route('/miner/nodes/resolve', method=['POST'])
+def consensus():
+    conflicts = blockchain.resolve_conflicts()
+
+    if conflicts:
+        response = {
+            'message': 'Our chain was replaced.',
+            'new_chain': blockchain.chain,
+        }
+        return jsonify(response), 200
+
+    response = {
+        'message': 'Our chain is authoitative.',
+        'chain': blockchain.chain,
+    }
+    return jsonify(response), 200
+
 @app.route('/mine', methods=['GET'])
 def mine():
     last_block = blockchain.last_block
