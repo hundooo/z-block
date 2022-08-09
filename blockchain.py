@@ -3,15 +3,22 @@ import json
 
 from time import time
 from uuid import uuid4
+from urllib.parse import urlparse
 from flask import Flask, jsonify, request
 
 
 class BlockChain(object):
     def __init__(self):
         self.chain = []
+        self.nodes = set()
         self.current_transactions = []
         self.new_block(previous_hash=1, proof=100)
     
+    def register_miner_node(self, address):
+        parsed_url = urlparse(address)
+        self.nodes.add(parse_url.netloc)
+        return
+
     @staticmethod
     def hash(block):
         block_string = json.dumps(block, sort_keys=True).encode()
