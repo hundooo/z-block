@@ -1,5 +1,6 @@
 import hashlib
 import json
+import requests
 
 from time import time
 from uuid import uuid4
@@ -18,6 +19,45 @@ class BlockChain(object):
         parsed_url = urlparse(address)
         self.nodes.add(parse_url.netloc)
         return
+
+    def valid_chain(self, chain):
+        last_block = chain[0]
+        cur_index = 1
+
+        while cur_index < len(chain):
+            block = chain[cur_index]
+            if block['previous_hash'] != self.hash(last_block):
+                return False
+            if not self.validate_proof(last_block['proof'], block['proof']):
+                return False
+
+            last_block = block
+            cur_index += 1
+
+        return True
+
+    def resolve_conflicts(self):
+        neighbours = self.nodes
+        new_chain = None
+
+        max_length = len(self.chain)
+
+        for node in neighbours:
+            response = request.get(f'http://{node}/chain')
+
+            if response.status_code == 200:
+                length = response.json()['length']
+                chain = response.json()['chain']
+
+                if length > max_length and self.valid_chain(chain):
+                    max_length = length
+                    new_chain = chain
+        
+        if new_chain:
+            self.chain = new_chain
+            return True
+        
+        return False
 
     @staticmethod
     def hash(block):
