@@ -7,7 +7,6 @@ from uuid import uuid4
 from urllib.parse import urlparse
 from flask import Flask, jsonify, request
 
-
 class BlockChain(object):
     def __init__(self):
         self.chain = []
@@ -104,8 +103,8 @@ app = Flask(__name__)
 node_identifier = str(uuid4()).replace('-','')
 blockchain = BlockChain()
 
-@app.route('/miner/register', method=['POST'])
-def register_new_miner():
+@app.route('/nodes/register', method=['POST'])
+def register_nodes():
     values = request.get_json()
 
     nodes = values.get('nodes')
@@ -121,7 +120,7 @@ def register_new_miner():
     }
     return jsonify(response), 200
 
-@app.route('/miner/nodes/resolve', method=['POST'])
+@app.route('/nodes/resolve', method=['POST'])
 def consensus():
     conflicts = blockchain.resolve_conflicts()
 
