@@ -14,9 +14,9 @@ class BlockChain(object):
         self.current_transactions = []
         self.new_block(previous_hash=1, proof=100)
     
-    def register_miner_node(self, address):
+    def register_node(self, address):
         parsed_url = urlparse(address)
-        self.nodes.add(parse_url.netloc)
+        self.nodes.add(parsed_url.netloc)
         return
 
     def valid_chain(self, chain):
@@ -42,7 +42,7 @@ class BlockChain(object):
         max_length = len(self.chain)
 
         for node in neighbours:
-            response = request.get(f'http://{node}/chain')
+            response = requests.get(f'http://{node}/chain')
 
             if response.status_code == 200:
                 length = response.json()['length']
@@ -103,7 +103,7 @@ app = Flask(__name__)
 node_identifier = str(uuid4()).replace('-','')
 blockchain = BlockChain()
 
-@app.route('/nodes/register', method=['POST'])
+@app.route('/nodes/register', methods=['POST'])
 def register_nodes():
     values = request.get_json()
 
@@ -120,7 +120,7 @@ def register_nodes():
     }
     return jsonify(response), 200
 
-@app.route('/nodes/resolve', method=['POST'])
+@app.route('/nodes/resolve', methods=['GET'])
 def consensus():
     conflicts = blockchain.resolve_conflicts()
 
