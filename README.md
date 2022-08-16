@@ -92,7 +92,3 @@ We can update our blockchain with the most up to date version of the blockchain 
 ```
 curl http://localhost:5000/nodes/resolve
 ```
-
-
-
-
