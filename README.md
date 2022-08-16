@@ -19,13 +19,29 @@ $ flask run
 We now have an up an running flask server to interact with our blockchain.
 
 ## Usage
-
-
+Before we can begin interacting with our blockchain we need to first understand what a block on the chain looks like
+``` 
+{
+    'index': 1,
+    'timestamp': 1506092455,
+    'transactions': [
+        {
+            'sender': "d4ee26eee15148ee92c6cd394edd974e",
+            'recipient': "a77f5cdfa2934hv25c7c7da5df1f",
+            'amount': 19,
+        }
+    ],
+    'proof': 35293,
+    'previous_hash': "e17dc1bc69806ca3311e7a41c2e5ea763ca9756585d2cef6e42fe1478b2ae8e3"
+}
 ```
+Each block has a index, timestamp, list of transactions, proof, and its own hash as well as the hash of the previous block.
+
+
 $ curl -X GET -H "Content-Type: application/json" -d '{
   "sender": "d4ee26eee15148ee92c6cd394edd974e",
-  "recipient": "recipient-address",
-  "amount": 5
+  "recipient": "a77f5cdfa2934hv25c7c7da5df1f",
+  "amount": 20
  }' http://localhost:5000/transaction/new
 ```
 
