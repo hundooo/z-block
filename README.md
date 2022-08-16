@@ -37,13 +37,41 @@ Before we can begin interacting with our blockchain we need to first understand 
 ```
 Each block has a index, timestamp, list of transactions, proof, and its own hash as well as the hash of the previous block.
 
+Now loading up a new instance of git bash we can begin interacting with our blockchain.
 
+### Mining
+We can mine a block onto our chain using the following curl command in git bash
+```
+$ curl http://localhost:5000/mine
+```
+
+### Adding Transactions
+We can add transactions onto our blockchain by sending a json object of the following form
+```
+{
+  "sender": "d4ee26eee15148ee92c6cd394edd974e",
+  "recipient": "a77f5cdfa2934hv25c7c7da5df1f",
+  "amount": 20
+ }
+```
+this can be done with the following curl command 
+```
 $ curl -X GET -H "Content-Type: application/json" -d '{
   "sender": "d4ee26eee15148ee92c6cd394edd974e",
   "recipient": "a77f5cdfa2934hv25c7c7da5df1f",
   "amount": 20
  }' http://localhost:5000/transaction/new
 ```
+
+### Viewing Chain 
+We can view our entire blockchain using the following curl command 
+```
+$ curl http://localhost:5000/chain
+```
+
+
+
+
 
 ```
 $ curl -X POST -H "Content-Type: application/json" -d '{
