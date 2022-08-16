@@ -14,7 +14,7 @@ $ export set FLASK_APP=blockchain
 ```
 Finally, run the flask app with the following command 
 ```
-$ flask run
+$ flask run -h localhost -p 5000
 ```
 We now have an up an running flask server to interact with our blockchain.
 
@@ -69,12 +69,30 @@ We can view our entire blockchain using the following curl command
 $ curl http://localhost:5000/chain
 ```
 
+Now before we can begin using consensus with our blockchain we must first setup other nodes on the network, and register them to our node.
 
+To setup another node we can follow the same process outlined in Setup in a new git bash terminal, but changing the port number when we run the flask app.
 
-
-
+### Registering nodes
+In order to register nodes we will send a json object containing the IP address of the other nodes on the network.
+```
+{
+  "nodes": ["http://localhost:5001"]
+}
+```
+We can achieve this with the following curl command 
 ```
 $ curl -X POST -H "Content-Type: application/json" -d '{
   "nodes": ["http://127.0.0.1:5001"]
  }' http://localhost:5000/nodes/register
 ```
+
+### Consensus
+We can update our blockchain with the most up to date version of the blockchain on the network with the following curl command 
+```
+curl http://localhost:5000/nodes/resolve
+```
+
+
+
+
