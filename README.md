@@ -1,5 +1,5 @@
-# simple-blockchain
-This project as the name implies was made in order to understand the structure of a blockchain at its simplest, as well as, understand related ideas such as chaining, consensus, and proof of work. Python was used to created the blockchain object, and Flask was utilized to handle API endpoints.
+# z-block
+This project as the name might imply was made in order to understand the structure of a blockchain at its simplest, as well as, understand related ideas such as chaining, consensus, and proof of work. Python was used to created the blockchain object, and Flask was utilized to handle API endpoints.
 
 ## Setup 
 In order to use this blockchain you will need a Python Interpreter and an HTTP client such as cURL.
